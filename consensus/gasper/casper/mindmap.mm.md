@@ -1,0 +1,51 @@
+# Casper FFG in Ethereum Consensus
+## Role
+- Finality Gadget
+    - Provides strong, irreversible guarantees for blocks
+## Key Concepts
+- ### Proof of Stake (PoS)
+    - Consensus mechanism
+    - Replaces Proof of Work (PoW)
+    - Validators
+        - Stake ETH as collateral (min 32 ETH)
+        - Selected to propose/attest blocks
+    - Incentives
+        - Rewards for honest participation
+    - Penalties (Slashing)
+        - Loss of staked ETH for malicious behavior
+        - Prevents double finality votes, surrounding votes
+- ### Beacon Chain (Consensus Layer)
+    - Coordinates validators
+    - Manages staking
+    - Processes attestations and FFG votes
+- ### Epochs
+    - Time periods on the Beacon Chain
+    - Each epoch = 32 slots (approx. 6.4 minutes)
+    - FFG votes occur at epoch boundaries
+- ### Justification
+    - A block is "justified" when 2/3+ of the *total staked ETH* votes for it
+    - Strong economic agreement on a block's validity
+    - Achieved on epoch boundary blocks
+- ### Finalization
+    - A justified block becomes "finalized" when the *next* epoch's starting block is also justified
+    - Considered irreversible and immutable
+    - Crucial for transaction certainty
+## How it Works (Simplified Flow)
+- Validators stake ETH to join network
+- Per Slot (12 seconds)
+    - Validator proposes block (from Execution Layer)
+    - Other validators attest to block (LMD GHOST)
+- Per Epoch (32 slots)
+    - Validators cast FFG votes for source and target epoch boundary blocks
+    - Beacon Chain aggregates votes
+    - If 2/3+ stake votes for target block, it becomes JUSTIFIED
+    - If a block is justified AND its successor is justified, the first block (and its epoch) becomes FINALIZED
+## Benefits
+- Enhanced Security
+    - Strong finality prevents chain reorganizations
+- Economic Security
+    - Misbehavior is economically prohibitive (slashing)
+- Energy Efficiency
+    - Significantly less energy consumption compared to PoW
+- Scalability Foundation
+    - Enables future scaling solutions like sharding
